@@ -1,0 +1,82 @@
+- generic [ref=e39]:
+  - complementary [ref=e40]:
+    - generic [ref=e41]:
+      - generic [ref=e43]: L
+      - generic [ref=e44]: Lyra
+    - navigation [ref=e45]:
+      - link "Dashboard" [ref=e46] [cursor=pointer]:
+        - /url: /app
+        - img [ref=e47]
+        - text: Dashboard
+      - link "Upcoming" [ref=e52] [cursor=pointer]:
+        - /url: /app/upcoming
+        - img [ref=e53]
+        - text: Upcoming
+      - link "Focus" [ref=e55] [cursor=pointer]:
+        - /url: /app/focus
+        - img [ref=e56]
+        - text: Focus
+      - link "Insights" [ref=e58] [cursor=pointer]:
+        - /url: /app/insights
+        - img [ref=e59]
+        - text: Insights
+      - link "History" [ref=e61] [cursor=pointer]:
+        - /url: /app/history
+        - img [ref=e62]
+        - text: History
+      - link "Settings" [ref=e66] [cursor=pointer]:
+        - /url: /app/settings
+        - img [ref=e67]
+        - text: Settings
+    - button "Add Task" [ref=e71] [cursor=pointer]:
+      - img [ref=e72]
+      - text: Add Task
+  - banner [ref=e73]:
+    - generic [ref=e74]:
+      - heading "Good morning" [level=1] [ref=e76]
+      - button "Toggle theme" [ref=e77] [cursor=pointer]:
+        - img [ref=e79]
+  - main [ref=e81]:
+    - generic [ref=e82]:
+      - generic [ref=e117]:
+        - img [ref=e119]
+        - paragraph [ref=e122]: "Pengingat: Ada 1 jadwal kuliah besok!"
+        - button "Dismiss reminder" [ref=e123]:
+          - img [ref=e124]
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - textbox "Add a task..." [active] [ref=e87]
+          - button "Add Task" [disabled] [ref=e88]:
+            - img [ref=e89]
+            - generic [ref=e90]: Add Task
+        - paragraph [ref=e91]: "Ketik 'Tugas PBO besok !high #kuliah' lalu tekan Enter ↵"
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e94]: Priority
+            - generic [ref=e95]:
+              - button "low" [ref=e96]
+              - button "medium" [ref=e97]
+              - button "high" [ref=e98]
+          - generic [ref=e99]:
+            - generic [ref=e100]: Category
+            - generic [ref=e101]:
+              - button "Personal" [ref=e102]
+              - button "Work" [ref=e103]
+              - button "Kuliah" [ref=e104]
+              - button "BEM" [ref=e105]
+              - button "Lainnya" [ref=e106]
+      - generic [ref=e128]:
+        - button "Mark complete" [ref=e130] [cursor=pointer]
+        - generic [ref=e132]:
+          - paragraph [ref=e134]: Tugas PBO
+          - generic [ref=e135]:
+            - generic [ref=e136]: high
+            - generic [ref=e137]: Kuliah
+            - generic [ref=e138]:
+              - generic [ref=e139]: Besok
+              - generic [ref=e140]: 15 Mei
+        - generic [ref=e142]:
+          - button "Edit task" [ref=e143] [cursor=pointer]:
+            - img [ref=e144]
+          - button "Delete task" [ref=e147] [cursor=pointer]:
+            - img [ref=e148]

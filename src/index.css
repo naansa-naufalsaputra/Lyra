@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  
+  /* Lyra Design System Radius */
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+  --radius-pill: 9999px;
+
+  /* Priority Colors */
+  --color-priority-high: var(--priority-high);
+  --color-priority-medium: var(--priority-medium);
+  --color-priority-low: var(--priority-low);
+
+  /* Semantic Colors */
+  --color-bg-app: var(--bg-app);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-elevated: var(--bg-surface-elevated);
+  --color-accent: var(--accent);
+
+  /* Tracking for Editorial Typography */
+  --tracking-tight: -0.01em;
+  --tracking-tighter: -0.02em;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    /* Light Mode (Amie-inspired) */
+    --bg-app: #FAFAFA;
+    --bg-surface: #FFFFFF;
+    --bg-surface-hover: #F5F5F5;
+    --text-primary: #000000;
+    --text-secondary: #4A4A4A; /* Adjusted for WCAG AA */
+    --text-tertiary: #8A8A8A;
+    --border-default: #EBEBEB;
+    --border-strong: #CDCDCD;
+    --accent: #11A8FF;
+    --accent-hover: #0A96E6;
+    --destructive: #C11B11;
+
+    /* Priority */
+    --priority-high: #C11B11;
+    --priority-medium: #F59E0B;
+    --priority-low: #8A8A8A;
+
+    /* Category Tints (Notion-inspired) */
+    --cat-lavender-bg: #e6e0f5;
+    --cat-lavender-text: #391c57;
+    --cat-sky-bg: #dcecfa;
+    --cat-sky-text: #005bab;
+    --cat-rose-bg: #fde0ec;
+    --cat-rose-text: #a02e6d;
+    --cat-mint-bg: #d9f3e1;
+    --cat-mint-text: #1aae39;
+    --cat-yellow-bg: #fef7d6;
+    --cat-yellow-text: #523410;
+
+    /* Glass */
+    --glass-bg: rgba(250, 250, 250, 0.8);
+    --glass-border: rgba(205, 205, 205, 0.4);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .dark {
+    color-scheme: dark;
+    /* Dark Mode (Linear-inspired "Deep Dark") */
+    --bg-app: #010102;
+    --bg-surface: #0F1011;
+    --bg-surface-hover: #141516;
+    --bg-surface-elevated: #18191a;
+    --text-primary: #F7F8F8;
+    --text-secondary: #8A8F98;
+    --text-tertiary: #62666D;
+    --border-default: rgba(255, 255, 255, 0.05);
+    --border-strong: #23252A;
+    --accent: #5E6AD2;
+    --accent-hover: #828FFF;
+    --destructive: #E03131;
+
+    /* Priority */
+    --priority-high: #E03131;
+    --priority-medium: #F59E0B;
+    --priority-low: #62666D;
+
+    /* Category Tints (Notion-inspired - Deeper for Dark Mode) */
+    --cat-lavender-bg: #391c57;
+    --cat-lavender-text: #d6b6f6;
+    --cat-sky-bg: #00385a;
+    --cat-sky-text: #95ccff;
+    --cat-rose-bg: #690005;
+    --cat-rose-text: #ffb4ab;
+    --cat-mint-bg: #062d1a;
+    --cat-mint-text: #1aae39;
+    --cat-yellow-bg: #4d1c00;
+    --cat-yellow-text: #f5d75e;
+
+    /* Glass */
+    --glass-bg: rgba(1, 1, 2, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.08);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 24px 48px -8px rgba(0, 0, 0, 0.5);
+  }
+
+  * {
+    @apply border-[var(--border-default)];
+  }
+
+  /* Flawless Theme Transition */
+  html.light, html.dark, 
+  html.light *, html.dark *,
+  html.light *::before, html.dark *::before,
+  html.light *::after, html.dark *::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow, backdrop-filter;
+    transition-duration: 400ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* View Transition API Polish */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.4s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Prevent transitions on elements that should be instant (like initial load) */
+  .no-transition * {
+    transition: none !important;
+  }
+
+  /* Snappy Hover states (overriding global theme transitions) */
+  .hover\:bg-surface-hover:hover,
+  .hover\:bg-accent-hover:hover,
+  .hover\:text-primary:hover,
+  .hover\:text-accent:hover {
+    transition-duration: 150ms !important;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg-app);
+    color: var(--text-primary);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  /* Custom scrollbar - Linear style */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 99px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
+  }
+}
+
+/* Lyra utilities */
+@utility bg-app { background-color: var(--bg-app); }
+@utility bg-surface { background-color: var(--bg-surface); }
+@utility bg-surface-hover { background-color: var(--bg-surface-hover); }
+@utility bg-surface-elevated { background-color: var(--bg-surface-elevated); }
+@utility text-primary { color: var(--text-primary); }
+@utility text-secondary { color: var(--text-secondary); }
+@utility text-tertiary { color: var(--text-tertiary); }
+@utility border-default { border-color: var(--border-default); }
+@utility border-strong { border-color: var(--border-strong); }
+@utility accent { color: var(--accent); }
+@utility bg-accent { background-color: var(--accent); }
+@utility bg-accent-hover { background-color: var(--accent-hover); }
+@utility border-accent { border-color: var(--accent); }
+@utility text-destructive { color: var(--destructive); }
+
+/* Typography Tracking */
+@utility tracking-editorial { letter-spacing: var(--tracking-tight); }
+@utility tracking-editorial-tight { letter-spacing: var(--tracking-tighter); }
+
+@utility glass {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+@utility shadow-lyra-sm { box-shadow: var(--shadow-sm); }
+@utility shadow-lyra-md { box-shadow: var(--shadow-md); }
+@utility shadow-lyra-lg { box-shadow: var(--shadow-lg); }
+
+@utility radius-card { border-radius: var(--radius-card); }
+@utility radius-button { border-radius: var(--radius-button); }
+@utility radius-input { border-radius: var(--radius-input); }
+@utility radius-pill { border-radius: var(--radius-pill); }
+
+/* Surface Edge Highlight (Linear Style) */
+@utility surface-edge {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
