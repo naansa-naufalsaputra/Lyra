@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Trash2, Pencil, RefreshCcw, AlignLeft } from "lucide-react";
 import { isToday, isTomorrow, parseISO, format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import { useTaskModal } from "../context/TaskModalContext";
 import { useTasks } from "../hooks/useTasks";
 
@@ -50,6 +51,7 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { openModal, openDetail } = useTaskModal();
   const { rules } = useTasks();
+  const { t } = useTranslation();
 
   const rule = task.ruleId ? rules.find(r => r.id === task.ruleId) : null;
 
@@ -63,14 +65,14 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
     if (!task.dueDate || task.completed) return null;
 
     const date = parseISO(task.dueDate);
-    if (isToday(date)) return "Hari Ini";
-    if (isTomorrow(date)) return "Besok";
+    if (isToday(date)) return t("task_card.today");
+    if (isTomorrow(date)) return t("task_card.tomorrow");
     return null;
-  }, [task.completed, task.dueDate]);
+  }, [task.completed, task.dueDate, t]);
 
-  const urgencyClass = urgencyLabel === "Hari Ini"
+  const urgencyClass = urgencyLabel === t("task_card.today")
     ? "border-red-400/40 shadow-red-500/10"
-    : urgencyLabel === "Besok"
+    : urgencyLabel === t("task_card.tomorrow")
       ? "border-amber-400/40 shadow-amber-500/10"
       : task.completed
         ? ""
@@ -161,7 +163,7 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
               {rule && rule.active && (
                 <div className="flex items-center gap-1.5 text-[11px] text-secondary/60 font-medium">
                   <RefreshCcw size={10} className="text-accent/50" />
-                  <span>Jadwal Berikutnya: {format(parseISO(rule.nextOccurrence), "dd MMM")}</span>
+                  <span>{t("task_card.next_schedule")}: {format(parseISO(rule.nextOccurrence), "dd MMM")}</span>
                 </div>
               )}
             </div>
@@ -219,7 +221,7 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
                       <span
                         className={`
                           rounded-pill border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em]
-                          ${urgencyLabel === "Hari Ini"
+                          ${urgencyLabel === t("task_card.today")
                             ? "border-red-400/30 bg-red-500/10 text-red-200"
                             : "border-amber-400/30 bg-amber-500/10 text-amber-200"
                           }

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../context/ThemeContext";
 import { useTaskModal } from "../context/TaskModalContext";
 import { useTasks } from "../hooks/useTasks";
+import { useCategories } from "../context/CategoryContext";
 import { Task } from "./TaskCard";
 
 const PRIORITIES = [
@@ -15,19 +16,21 @@ const PRIORITIES = [
   { value: "high", label: "High", color: "text-red-500", bg: "bg-red-500/10" },
 ];
 
-const CATEGORIES = [
-  { name: "Personal", icon: Home },
-  { name: "Work", icon: Briefcase },
-  { name: "Urgent", icon: Zap },
-  { name: "Study", icon: BookOpen },
-  { name: "Other", icon: Layers },
-];
+const CATEGORY_ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  Personal: Home,
+  Work: Briefcase,
+  Urgent: Zap,
+  Study: BookOpen,
+  Kuliah: BookOpen,
+  BEM: Layers,
+};
 
 export function AddTaskModal() {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { isOpen, closeModal, editingTask } = useTaskModal();
   const { addTask, updateTask } = useTasks();
+  const { categories } = useCategories();
   
   const isEditMode = !!editingTask;
 
@@ -58,6 +61,7 @@ export function AddTaskModal() {
             addTask={addTask}
             updateTask={updateTask}
             closeModal={closeModal}
+            categories={categories}
           />
         </div>
       )}
@@ -73,10 +77,11 @@ interface AddTaskModalContentProps {
   addTask: (task: Omit<Task, "id" | "createdAt" | "completed">) => Promise<void>;
   updateTask: (id: string, updates: Partial<Task>) => Promise<void>;
   closeModal: () => void;
+  categories: string[];
 }
 
 function AddTaskModalContent({ 
-  t, theme, isEditMode, editingTask, addTask, updateTask, closeModal 
+  t, theme, isEditMode, editingTask, addTask, updateTask, closeModal, categories 
 }: AddTaskModalContentProps) {
   const [title, setTitle] = useState(editingTask?.text || "");
   const [dueDate, setDueDate] = useState<Date>(editingTask?.dueDate ? new Date(editingTask.dueDate) : new Date());
@@ -252,7 +257,7 @@ function AddTaskModalContent({
               className="flex items-center gap-2 px-4 py-2 rounded-pill text-sm border border-default bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-all"
             >
               {(() => {
-                const Icon = CATEGORIES.find(c => c.name === category)?.icon || Tag;
+                const Icon = CATEGORY_ICONS[category] || Tag;
                 return <Icon size={14} style={secondaryTextStyle} />;
               })()}
               <span className="font-medium truncate max-w-[100px]" style={secondaryTextStyle}>{category}</span>
@@ -268,20 +273,23 @@ function AddTaskModalContent({
                   className="absolute bottom-full left-0 mb-2 z-[60] w-48 bg-surface border border-default rounded-card shadow-2xl overflow-hidden"
                 >
                   <div className="max-h-60 overflow-y-auto">
-                    {CATEGORIES.map((cat) => (
-                      <button
-                        key={cat.name}
-                        type="button"
-                        onClick={() => {
-                          setCategory(cat.name);
-                          setIsOpenCategory(false);
-                        }}
-                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors text-left"
-                      >
-                        <cat.icon size={14} className="text-accent" />
-                        <span className="text-sm font-medium" style={textStyle}>{cat.name}</span>
-                      </button>
-                    ))}
+                    {categories.map((cat) => {
+                      const CatIcon = CATEGORY_ICONS[cat] || Tag;
+                      return (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => {
+                            setCategory(cat);
+                            setIsOpenCategory(false);
+                          }}
+                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors text-left"
+                        >
+                          <CatIcon size={14} className="text-accent" />
+                          <span className="text-sm font-medium" style={textStyle}>{cat}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </motion.div>
               )}

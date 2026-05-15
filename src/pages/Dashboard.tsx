@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LayoutPanelTop, SearchX } from "lucide-react";
+import { LayoutPanelTop, SearchX, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { TaskCard, NewTask } from "../components/TaskCard";
 import { ReminderBanner } from "../components/ReminderBanner";
@@ -10,6 +10,8 @@ import { EmptyState } from "../components/EmptyState";
 import { DashboardSkeleton } from "../components/SkeletonLoader";
 import { SmartTaskInput } from "../components/SmartTaskInput";
 import { TaskFilters } from "../components/TaskFilters";
+import { AiSuggestModal } from "../components/AiSuggestModal";
+import { isKeyConfigured } from "../services/aiScheduler";
 
 export function Dashboard() {
   const { t } = useTranslation();
@@ -22,6 +24,7 @@ export function Dashboard() {
   const [filterPriority, setFilterPriority] = useState<string>("all");
   const [filterStatus, setFilterStatus] = useState<string>("active");
   const [filterCategory, setFilterCategory] = useState<string>("all");
+  const [showAiModal, setShowAiModal] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(searchQuery), 150);
@@ -90,6 +93,24 @@ export function Dashboard() {
           categories={categories} 
           onAdd={handleAddTask} 
         />
+
+        {/* AI Suggest Button */}
+        {isKeyConfigured() && (
+          <motion.button
+            onClick={() => setShowAiModal(true)}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mb-6 w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl border border-accent/20 bg-gradient-to-r from-accent/5 via-violet-500/5 to-accent/5 text-accent font-semibold text-[13px] shadow-lyra-sm backdrop-blur-sm hover:from-accent/10 hover:via-violet-500/10 hover:to-accent/10 hover:border-accent/30 transition-all cursor-pointer"
+          >
+            <Sparkles size={16} />
+            {t("ai.button")}
+          </motion.button>
+        )}
+
+        <AiSuggestModal isOpen={showAiModal} onClose={() => setShowAiModal(false)} />
 
         <TaskFilters 
           searchQuery={searchQuery}
