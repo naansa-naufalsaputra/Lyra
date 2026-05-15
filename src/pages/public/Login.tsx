@@ -1,17 +1,26 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Eye, EyeOff, Lock, ShieldCheck } from "lucide-react";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { motion, AnimatePresence } from "framer-motion";
+import { Eye, EyeOff, Lock, ShieldCheck, Mail, ArrowLeft, CheckCircle } from "lucide-react";
+import { signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
 import { auth, googleProvider } from "../../lib/firebase";
+import { useTranslation } from "react-i18next";
 
 export function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
+  // Forgot Password State
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+  const [resetError, setResetError] = useState("");
 
   /** Email + Password sign-in */
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,6 +56,31 @@ export function Login() {
       if (code !== "auth/popup-closed-by-user") {
         setError("Google sign-in failed. Please try again.");
       }
+    }
+  };
+
+  /** Send password reset email */
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resetEmail.trim()) return;
+    
+    setResetLoading(true);
+    setResetError("");
+    
+    try {
+      await sendPasswordResetEmail(auth, resetEmail.trim());
+      setResetSent(true);
+    } catch (err) {
+      const code = (err as { code?: string }).code;
+      if (code === "auth/user-not-found") {
+        setResetError(t("auth.user_not_found"));
+      } else if (code === "auth/invalid-email") {
+        setResetError(t("auth.invalid_email"));
+      } else {
+        setResetError(t("auth.reset_error"));
+      }
+    } finally {
+      setResetLoading(false);
     }
   };
 
@@ -114,9 +148,23 @@ export function Login() {
 
             {/* Password */}
             <div>
-              <label className="mb-1.5 block text-[12px] font-medium text-tertiary uppercase tracking-widest">
-                Password
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-[12px] font-medium text-tertiary uppercase tracking-widest">
+                  {t("auth.password")}
+                </label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowForgotPassword(true);
+                    setResetEmail(email);
+                    setResetSent(false);
+                    setResetError("");
+                  }}
+                  className="text-[11px] font-medium text-accent hover:text-accent-hover transition-colors cursor-pointer"
+                >
+                  {t("auth.forgot_password")}
+                </button>
+              </div>
               <div className="relative">
                 <input
                   id="login-password"
@@ -186,13 +234,109 @@ export function Login() {
 
           {/* Footer */}
           <p className="mt-6 text-center text-[13px] text-tertiary">
-            Don't have an account?{" "}
+            {t("auth.no_account")}{" "}
             <Link to="/register" className="font-medium text-accent hover:underline">
-              Sign up
+              {t("auth.sign_up")}
             </Link>
           </p>
         </div>
       </motion.div>
+
+      {/* Forgot Password Modal */}
+      <AnimatePresence>
+        {showForgotPassword && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowForgotPassword(false)}
+              className="absolute inset-0 bg-black/50 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-[400px] rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(15,16,17,0.95)] p-8 shadow-2xl backdrop-blur-xl"
+            >
+              {!resetSent ? (
+                <>
+                  <button
+                    onClick={() => setShowForgotPassword(false)}
+                    className="mb-4 flex items-center gap-2 text-[13px] text-secondary hover:text-primary transition-colors cursor-pointer"
+                  >
+                    <ArrowLeft size={14} />
+                    {t("auth.back_to_login")}
+                  </button>
+
+                  <div className="mb-6">
+                    <div className="h-10 w-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-4">
+                      <Mail size={20} className="text-accent" />
+                    </div>
+                    <h2 className="text-xl font-bold text-primary">{t("auth.reset_title")}</h2>
+                    <p className="text-[13px] text-secondary mt-1">{t("auth.reset_desc")}</p>
+                  </div>
+
+                  {resetError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-4 rounded-input border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-[13px] text-red-400"
+                    >
+                      {resetError}
+                    </motion.div>
+                  )}
+
+                  <form onSubmit={handleForgotPassword} className="space-y-4">
+                    <div>
+                      <label className="mb-1.5 block text-[12px] font-medium text-tertiary uppercase tracking-widest">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        value={resetEmail}
+                        onChange={(e) => setResetEmail(e.target.value)}
+                        placeholder="you@example.com"
+                        required
+                        autoFocus
+                        className="w-full rounded-input border border-default bg-surface px-4 py-3 text-[15px] text-primary placeholder:text-tertiary outline-none transition-all focus:border-accent focus:ring-1 focus:ring-accent/30"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={resetLoading}
+                      className="w-full flex items-center justify-center gap-2 rounded-input bg-accent py-3 text-[15px] font-semibold text-white shadow-lyra-sm transition-all hover:bg-accent-hover disabled:opacity-60 cursor-pointer"
+                    >
+                      {resetLoading ? (
+                        <span className="inline-flex items-center gap-2">
+                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                          {t("auth.sending")}
+                        </span>
+                      ) : (
+                        t("auth.send_reset_link")
+                      )}
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <div className="text-center py-4">
+                  <div className="h-14 w-14 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle size={28} className="text-emerald-400" />
+                  </div>
+                  <h2 className="text-xl font-bold text-primary mb-2">{t("auth.reset_sent_title")}</h2>
+                  <p className="text-[13px] text-secondary mb-6">{t("auth.reset_sent_desc")}</p>
+                  <button
+                    onClick={() => setShowForgotPassword(false)}
+                    className="px-6 py-2.5 rounded-input bg-accent text-white text-[14px] font-semibold hover:bg-accent-hover transition-all cursor-pointer"
+                  >
+                    {t("auth.back_to_login")}
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

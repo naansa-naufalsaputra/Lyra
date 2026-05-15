@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar as CalendarIcon, Plus, LayoutPanelTop } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { TaskCard } from "../components/TaskCard";
 import { useTasks } from "../hooks/useTasks";
 import { useTaskModal } from "../context/TaskModalContext";
@@ -8,6 +9,7 @@ import { EmptyState } from "../components/EmptyState";
 import { DashboardSkeleton } from "../components/SkeletonLoader";
 
 export function Upcoming() {
+  const { t } = useTranslation();
   const { tasks, mounted, toggleTask, deleteTask } = useTasks();
   const { openModal } = useTaskModal();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -50,12 +52,12 @@ export function Upcoming() {
     const laterTasks = tasks.filter(t => t.dueDate && t.dueDate > weekEndStr);
     
     return [
-      { title: "Hari Ini", tasks: todayTasks },
-      { title: "Besok", tasks: tomorrowTasks },
-      { title: "Minggu Ini", tasks: thisWeekTasks },
-      { title: "Mendatang", tasks: laterTasks }
+      { title: t("upcoming.today"), tasks: todayTasks },
+      { title: t("upcoming.tomorrow"), tasks: tomorrowTasks },
+      { title: t("upcoming.this_week"), tasks: thisWeekTasks },
+      { title: t("upcoming.later"), tasks: laterTasks }
     ].filter(group => group.tasks.length > 0);
-  }, [tasks]);
+  }, [tasks, t]);
 
   const filteredTasks = useMemo(() => {
     if (!selectedDateString) return [];
@@ -87,14 +89,14 @@ export function Upcoming() {
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-bold text-primary flex items-center gap-2.5">
           <CalendarIcon size={24} className="text-accent" />
-          Upcoming
+          {t("upcoming.title")}
         </h2>
         <div className="flex gap-2">
           <button 
             onClick={() => setSelectedDate(null)}
             className={`text-[12px] font-bold px-3 py-1.5 rounded-pill transition-all ${!selectedDate ? "bg-accent text-white" : "text-accent bg-accent/10 hover:bg-accent/20"}`}
           >
-            Semua Jadwal
+            {t("upcoming.all_schedule")}
           </button>
         </div>
       </div>
@@ -148,7 +150,7 @@ export function Upcoming() {
         <div className="flex items-center justify-between">
           <h3 className="text-[13px] font-bold text-tertiary uppercase tracking-[0.15em]">
             {!selectedDate 
-              ? "Garis Waktu" 
+              ? t("upcoming.timeline") 
               : selectedDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}
           </h3>
           <button 
@@ -156,7 +158,7 @@ export function Upcoming() {
             className="flex items-center gap-1.5 text-accent hover:text-accent-hover transition-colors text-sm font-semibold"
           >
             <Plus size={18} strokeWidth={2.5} />
-            <span>Tambah Tugas</span>
+            <span>{t("upcoming.add_task")}</span>
           </button>
         </div>
 
@@ -195,8 +197,8 @@ export function Upcoming() {
                 ) : (
                   <EmptyState
                     icon={LayoutPanelTop}
-                    title="Cakrawala bersih!"
-                    description="Tidak ada tugas mendatang dalam radar Anda. Waktunya bersantai."
+                    title={t("upcoming.empty_title")}
+                    description={t("upcoming.empty_desc")}
                   />
                 )}
               </motion.div>
@@ -221,8 +223,8 @@ export function Upcoming() {
                 ) : (
                   <EmptyState
                     icon={CalendarIcon}
-                    title="Hari yang tenang"
-                    description="Tidak ada tugas untuk tanggal yang dipilih."
+                    title={t("upcoming.empty_date_title")}
+                    description={t("upcoming.empty_date_desc")}
                   />
                 )}
               </motion.div>

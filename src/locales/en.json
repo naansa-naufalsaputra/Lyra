@@ -2,6 +2,7 @@
   "common": {
     "search": "Search tasks...",
     "add_task": "Add Task",
+    "edit_task": "Edit Task",
     "placeholder": "Add a task...",
     "hint": "Hint: Type 'Task PBO tomorrow !high #college' then press Enter ↵",
     "priority": "Priority",
@@ -40,5 +41,64 @@
   "languages": {
     "id": "Bahasa Indonesia",
     "en": "English"
+  },
+  "ai": {
+    "button": "✨ AI Suggest — Smart Schedule Insights",
+    "title": "AI Schedule Assistant",
+    "subtitle": "Smart scheduling powered by Gemini AI",
+    "generate": "Generate Suggestions",
+    "loading": "Analyzing your tasks...",
+    "suggestions": "AI Suggestions",
+    "regenerate": "Regenerate Suggestions",
+    "no_key": "No API key configured. Go to Settings → AI Integration to add your Gemini key.",
+    "error": "An error occurred while generating suggestions.",
+    "parse_error": "Failed to parse AI response. Please try again."
+  },
+  "detail": {
+    "status": "Status",
+    "priority": "Priority",
+    "category": "Category",
+    "due_date": "Due Date",
+    "no_date": "No Date",
+    "notes": "Notes",
+    "notes_placeholder": "Add notes or a description here...",
+    "task_title": "Task Title",
+    "completed": "Completed",
+    "not_completed": "Not Completed"
+  },
+  "auth": {
+    "password": "Password",
+    "forgot_password": "Forgot Password?",
+    "back_to_login": "Back to Login",
+    "reset_title": "Reset Password",
+    "reset_desc": "Enter your email and we'll send you a link to reset your password.",
+    "send_reset_link": "Send Reset Link",
+    "sending": "Sending...",
+    "reset_sent_title": "Email Sent!",
+    "reset_sent_desc": "Check your inbox for the password reset link.",
+    "user_not_found": "No account found with that email.",
+    "invalid_email": "Invalid email format.",
+    "reset_error": "Failed to send reset email. Please try again.",
+    "no_account": "Don't have an account?",
+    "sign_up": "Sign up"
+  },
+  "upcoming": {
+    "title": "Upcoming",
+    "all_schedule": "All Schedule",
+    "timeline": "Timeline",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "this_week": "This Week",
+    "later": "Later",
+    "add_task": "Add Task",
+    "empty_title": "Horizon is clear!",
+    "empty_desc": "No upcoming tasks on your radar. Time to relax.",
+    "empty_date_title": "A quiet day",
+    "empty_date_desc": "No tasks for the selected date."
+  },
+  "task_card": {
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "next_schedule": "Next Schedule"
   }
 }

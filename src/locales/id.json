@@ -2,6 +2,7 @@
   "common": {
     "search": "Cari tugas...",
     "add_task": "Tambah Tugas",
+    "edit_task": "Edit Tugas",
     "placeholder": "Tambah tugas baru...",
     "hint": "Petunjuk: Ketik 'Tugas PBO besok !high #kuliah' lalu tekan Enter ↵",
     "priority": "Prioritas",
@@ -40,5 +41,64 @@
   "languages": {
     "id": "Bahasa Indonesia",
     "en": "English"
+  },
+  "ai": {
+    "button": "✨ AI Suggest — Saran Penjadwalan Cerdas",
+    "title": "AI Schedule Assistant",
+    "subtitle": "Saran jadwal cerdas berbasis Gemini AI",
+    "generate": "Buat Saran Jadwal",
+    "loading": "Menganalisis tugas Anda...",
+    "suggestions": "Saran dari AI",
+    "regenerate": "Buat Ulang Saran",
+    "no_key": "Belum ada API key. Buka Pengaturan → Integrasi AI untuk menambahkan key Gemini.",
+    "error": "Terjadi kesalahan saat menghasilkan saran.",
+    "parse_error": "Gagal memproses respons AI. Silakan coba lagi."
+  },
+  "detail": {
+    "status": "Status",
+    "priority": "Prioritas",
+    "category": "Kategori",
+    "due_date": "Tanggal Jatuh Tempo",
+    "no_date": "Belum Ada Tanggal",
+    "notes": "Catatan",
+    "notes_placeholder": "Tambahkan catatan atau deskripsi di sini...",
+    "task_title": "Judul Tugas",
+    "completed": "Selesai",
+    "not_completed": "Belum Selesai"
+  },
+  "auth": {
+    "password": "Kata Sandi",
+    "forgot_password": "Lupa Password?",
+    "back_to_login": "Kembali ke Login",
+    "reset_title": "Reset Password",
+    "reset_desc": "Masukkan email Anda dan kami akan mengirimkan link untuk reset password.",
+    "send_reset_link": "Kirim Link Reset",
+    "sending": "Mengirim...",
+    "reset_sent_title": "Email Terkirim!",
+    "reset_sent_desc": "Cek inbox email Anda untuk link reset password.",
+    "user_not_found": "Email tidak terdaftar.",
+    "invalid_email": "Format email tidak valid.",
+    "reset_error": "Gagal mengirim email reset. Silakan coba lagi.",
+    "no_account": "Belum punya akun?",
+    "sign_up": "Daftar"
+  },
+  "upcoming": {
+    "title": "Mendatang",
+    "all_schedule": "Semua Jadwal",
+    "timeline": "Garis Waktu",
+    "today": "Hari Ini",
+    "tomorrow": "Besok",
+    "this_week": "Minggu Ini",
+    "later": "Mendatang",
+    "add_task": "Tambah Tugas",
+    "empty_title": "Cakrawala bersih!",
+    "empty_desc": "Tidak ada tugas mendatang dalam radar Anda. Waktunya bersantai.",
+    "empty_date_title": "Hari yang tenang",
+    "empty_date_desc": "Tidak ada tugas untuk tanggal yang dipilih."
+  },
+  "task_card": {
+    "today": "Hari Ini",
+    "tomorrow": "Besok",
+    "next_schedule": "Jadwal Berikutnya"
   }
 }
