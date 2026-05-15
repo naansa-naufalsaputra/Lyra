@@ -227,7 +227,7 @@ function AddTaskModalContent({
                       key={p.value}
                       type="button"
                       onClick={() => {
-                        setPriority(p.value);
+                        setPriority(p.value as "low" | "medium" | "high");
                         setIsOpenPriority(false);
                       }}
                       className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors text-left"
