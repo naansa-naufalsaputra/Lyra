@@ -9,7 +9,7 @@ import { EmptyState } from "../components/EmptyState";
 import { DashboardSkeleton } from "../components/SkeletonLoader";
 
 export function Upcoming() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { tasks, mounted, toggleTask, deleteTask } = useTasks();
   const { openModal } = useTaskModal();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -63,6 +63,8 @@ export function Upcoming() {
     if (!selectedDateString) return [];
     return tasks.filter(task => task.dueDate === selectedDateString);
   }, [tasks, selectedDateString]);
+  
+  const currentLocale = i18n.resolvedLanguage || i18n.language;
 
   const handleDateClick = (date: Date) => {
     const dateStr = date.toISOString().split('T')[0];
@@ -151,7 +153,7 @@ export function Upcoming() {
           <h3 className="text-[13px] font-bold text-tertiary uppercase tracking-[0.15em]">
             {!selectedDate 
               ? t("upcoming.timeline") 
-              : selectedDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}
+              : selectedDate.toLocaleDateString(currentLocale, { weekday: 'long', day: 'numeric', month: 'long' })}
           </h3>
           <button 
             onClick={() => openModal()}
