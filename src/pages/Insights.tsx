@@ -131,9 +131,10 @@ export function Insights() {
                         animate={{ width: `${percentage}%` }}
                         transition={{ duration: 1, ease: "easeOut" }}
                         className={`h-full rounded-full ${
-                          cat === "Kuliah" ? "bg-blue-500" : 
-                          cat === "BEM" ? "bg-purple-500" : 
-                          cat === "Personal" ? "bg-emerald-500" : "bg-slate-500"
+                          cat === "Kuliah" ? "bg-cyan-500" : 
+                          cat === "BEM" ? "bg-rose-500" : 
+                          cat === "Personal" ? "bg-emerald-500" : 
+                          cat === "Work" ? "bg-sky-500" : "bg-slate-500"
                         }`}
                       />
                     </div>

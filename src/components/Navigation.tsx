@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { LayoutDashboard, Calendar, History, Settings, Plus, Zap, BarChart3 } from "lucide-react";
 import { useTaskModal } from "../context/TaskModalContext";
+import { LyraLogo } from "./LyraLogo";
 
 const navItems = [
   { path: "/app", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -20,9 +21,7 @@ export function Navigation() {
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-default bg-surface/50 backdrop-blur-xl z-50">
         <div className="p-6 flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-accent flex items-center justify-center">
-            <span className="text-white font-bold text-xl">L</span>
-          </div>
+          <LyraLogo size={32} className="glow-accent rounded-lg" />
           <span className="text-xl font-semibold tracking-tight text-primary">Lyra</span>
         </div>
 
@@ -46,10 +45,10 @@ export function Navigation() {
           ))}
         </nav>
 
-        <div className="p-4">
+        <div className="p-4 border-t border-default/50">
           <button 
             onClick={() => openModal()}
-            className="w-full flex items-center justify-center gap-2 h-11 rounded-card bg-accent text-white font-semibold text-[14px] shadow-lyra-sm hover:bg-accent-hover transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 h-11 rounded-card bg-accent text-white font-semibold text-[14px] shadow-lyra-md hover:bg-accent-hover hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer glow-accent"
           >
             <Plus size={18} strokeWidth={2.5} />
             Add Task
@@ -65,7 +64,7 @@ export function Navigation() {
             {index === 3 && (
                <button 
                 onClick={() => openModal()}
-                className="flex items-center justify-center -mt-8 h-12 w-12 shrink-0 rounded-full bg-accent text-white shadow-lyra-lg transition-transform active:scale-95"
+                className="flex items-center justify-center -mt-8 h-12 w-12 shrink-0 rounded-full bg-accent text-white shadow-lyra-lg transition-transform hover:scale-105 active:scale-95"
                >
                  <Plus size={24} strokeWidth={2.5} />
                </button>

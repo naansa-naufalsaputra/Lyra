@@ -1,0 +1,44 @@
+{
+  "common": {
+    "search": "Cari tugas...",
+    "add_task": "Tambah Tugas",
+    "placeholder": "Tambah tugas baru...",
+    "hint": "Petunjuk: Ketik 'Tugas PBO besok !high #kuliah' lalu tekan Enter ↵",
+    "priority": "Prioritas",
+    "category": "Kategori",
+    "status": "Status"
+  },
+  "status": {
+    "all": "Semua",
+    "active": "Aktif",
+    "completed": "Selesai"
+  },
+  "priority": {
+    "all": "Semua",
+    "low": "Rendah",
+    "medium": "Sedang",
+    "high": "Tinggi"
+  },
+  "empty": {
+    "no_results": "Tidak ditemukan",
+    "no_results_desc": "Tidak ada tugas yang sesuai dengan pencarian atau filter saat ini.",
+    "all_done": "Semua beres!",
+    "all_done_desc": "Waktunya istirahat sejenak. Radar Anda bersih dari tugas."
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "appearance": "Tampilan",
+    "language": "Bahasa",
+    "light_mode": "Mode Terang",
+    "dark_mode": "Mode Gelap",
+    "ai_integration": "Integrasi AI",
+    "account": "Akun",
+    "logout": "Keluar",
+    "recurrence": "Aturan Berulang",
+    "no_rules": "Belum ada aturan berulang aktif."
+  },
+  "languages": {
+    "id": "Bahasa Indonesia",
+    "en": "English"
+  }
+}

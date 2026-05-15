@@ -1,5 +1,5 @@
-/* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
+import { useStore } from '../store/useStore';
 
 type Theme = 'light' | 'dark';
 
@@ -12,41 +12,13 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('lyra-theme');
-    if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+  const { theme, toggleTheme, setTheme } = useStore();
 
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
-    localStorage.setItem('lyra-theme', theme);
   }, [theme]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    
-    // Use View Transition API if available for a flawless transition
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        setThemeState(newTheme);
-      });
-    } else {
-      setThemeState(newTheme);
-    }
-  };
-
-  const setTheme = (newTheme: Theme) => {
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        setThemeState(newTheme);
-      });
-    } else {
-      setThemeState(newTheme);
-    }
-  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>

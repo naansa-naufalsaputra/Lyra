@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Lock, ShieldCheck } from "lucide-react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../lib/firebase";
 
@@ -142,8 +142,9 @@ export function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 w-full rounded-input bg-accent py-3 text-[15px] font-semibold text-white shadow-lyra-sm transition-all hover:bg-accent-hover disabled:opacity-60 cursor-pointer"
+              className="mt-2 w-full flex items-center justify-center gap-2 rounded-input bg-accent py-3 text-[15px] font-semibold text-white shadow-lyra-sm transition-all hover:bg-accent-hover disabled:opacity-60 cursor-pointer"
             >
+              {!loading && <Lock size={16} />}
               {loading ? (
                 <span className="inline-flex items-center gap-2">
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
@@ -153,6 +154,12 @@ export function Login() {
                 "Sign In"
               )}
             </button>
+
+            {/* Trust indicator */}
+            <div className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-tertiary font-medium">
+              <ShieldCheck size={14} className="text-emerald-500/80" />
+              256-bit SSL Secure Connection
+            </div>
           </form>
 
           {/* Divider */}

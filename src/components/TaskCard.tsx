@@ -26,6 +26,8 @@ export interface Task {
   };
 }
 
+export type NewTask = Omit<Task, "id" | "createdAt" | "completed">;
+
 export interface RecurrenceRule {
   id: string;
   userId: string;
@@ -142,7 +144,7 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
         <div className="min-w-0 flex-1 ml-1">
           <div className="relative">
             <div className="flex flex-col gap-0.5">
-              <p
+              <div
                 className={`
                   text-[15px] leading-[22px] transition-colors duration-300 font-sans tracking-editorial
                   ${task.completed ? "text-secondary" : "text-primary"}
@@ -154,7 +156,7 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
                     <AlignLeft size={12} className="text-tertiary ml-0.5 opacity-60" />
                   )}
                 </div>
-              </p>
+              </div>
               
               {rule && rule.active && (
                 <div className="flex items-center gap-1.5 text-[11px] text-secondary/60 font-medium">
@@ -195,12 +197,12 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
                  <span 
                   className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-pill border"
                   style={{ 
-                    backgroundColor: task.category === "Kuliah" ? "var(--cat-lavender-bg)" : 
+                    backgroundColor: task.category === "Kuliah" ? "var(--cat-cyan-bg)" : 
                                      task.category === "BEM" ? "var(--cat-rose-bg)" : 
                                      task.category === "Personal" ? "var(--cat-mint-bg)" : 
                                      task.category === "Work" ? "var(--cat-sky-bg)" : 
                                      "rgba(245, 158, 11, 0.14)",
-                    color: task.category === "Kuliah" ? "var(--cat-lavender-text)" : 
+                    color: task.category === "Kuliah" ? "var(--cat-cyan-text)" : 
                            task.category === "BEM" ? "var(--cat-rose-text)" : 
                            task.category === "Personal" ? "var(--cat-mint-text)" : 
                            task.category === "Work" ? "var(--cat-sky-text)" : 

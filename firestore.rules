@@ -6,10 +6,20 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == userId;
     }
 
+    // Validation for task data
+    function isValidTask(data) {
+      return data.userId == request.auth.uid &&
+             data.text is string && 
+             data.text.size() > 0 &&
+             data.completed is bool &&
+             data.priority in ["low", "medium", "high"];
+    }
+
     // Tasks collection rules
     match /tasks/{taskId} {
-      allow read, update, delete: if isOwner(resource.data.userId);
-      allow create: if isOwner(request.resource.data.userId);
+      allow read, delete: if isOwner(resource.data.userId);
+      allow update: if isOwner(resource.data.userId) && isValidTask(request.resource.data);
+      allow create: if isOwner(request.resource.data.userId) && isValidTask(request.resource.data);
     }
 
     // Categories collection rules

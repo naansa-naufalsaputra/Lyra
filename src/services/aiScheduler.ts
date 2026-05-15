@@ -6,6 +6,8 @@
  */
 
 const STORAGE_KEY = "lyra_gemini_api_key";
+const MODEL_KEY = "lyra_gemini_model";
+const DEFAULT_MODEL = "gemini-3.1-flash-lite";
 
 /** Retrieve the stored Gemini API key */
 export function getApiKey(): string | null {
@@ -20,6 +22,16 @@ export function setApiKey(key: string): void {
 /** Remove the stored Gemini API key */
 export function removeApiKey(): void {
   localStorage.removeItem(STORAGE_KEY);
+}
+
+/** Retrieve the stored Gemini model ID */
+export function getAiModel(): string {
+  return localStorage.getItem(MODEL_KEY) || DEFAULT_MODEL;
+}
+
+/** Store the Gemini model ID */
+export function setAiModel(model: string): void {
+  localStorage.setItem(MODEL_KEY, model);
 }
 
 /** Check if a valid key is configured */
@@ -51,8 +63,9 @@ export async function generateScheduleSuggestion(
   }
 
   try {
+    const modelId = getAiModel();
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

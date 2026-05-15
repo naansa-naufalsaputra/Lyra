@@ -29,7 +29,7 @@
   :root {
     color-scheme: light;
     /* Light Mode (Amie-inspired) */
-    --bg-app: #FAFAFA;
+    --bg-app: #F8F9FA;
     --bg-surface: #FFFFFF;
     --bg-surface-hover: #F5F5F5;
     --text-primary: #000000;
@@ -47,8 +47,8 @@
     --priority-low: #8A8A8A;
 
     /* Category Tints (Notion-inspired) */
-    --cat-lavender-bg: #e6e0f5;
-    --cat-lavender-text: #391c57;
+    --cat-cyan-bg: #e0f7f9;
+    --cat-cyan-text: #006064;
     --cat-sky-bg: #dcecfa;
     --cat-sky-text: #005bab;
     --cat-rose-bg: #fde0ec;
@@ -89,8 +89,8 @@
     --priority-low: #62666D;
 
     /* Category Tints (Notion-inspired - Deeper for Dark Mode) */
-    --cat-lavender-bg: #391c57;
-    --cat-lavender-text: #d6b6f6;
+    --cat-cyan-bg: #00363a;
+    --cat-cyan-text: #b2ebf2;
     --cat-sky-bg: #00385a;
     --cat-sky-text: #95ccff;
     --cat-rose-bg: #690005;
@@ -173,6 +173,149 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--text-tertiary);
   }
+}
+
+/* Universal react-day-picker v10 Grid Force */
+.rdp-root {
+  --rdp-accent-color: var(--accent);
+  --rdp-accent-color-foreground: white;
+  --rdp-day-height: 38px;
+  --rdp-day-width: 38px;
+  
+  font-family: inherit;
+  margin: 0;
+  padding: 12px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-card);
+  width: fit-content;
+  min-width: 290px;
+}
+
+.rdp-months { display: block !important; }
+.rdp-month { display: block !important; }
+
+.rdp-month_caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+  margin-bottom: 16px;
+}
+
+.rdp-caption_label {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.rdp-nav { display: flex; gap: 8px; }
+
+.rdp-button_next, .rdp-button_previous {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.rdp-month_grid {
+  display: table !important; /* Standard table layout first */
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.rdp-weekdays {
+  display: table-header-group !important;
+}
+
+.rdp-weekday {
+  display: table-cell !important;
+  width: 40px;
+  height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+}
+
+.rdp-weeks {
+  display: table-row-group !important;
+}
+
+.rdp-week {
+  display: table-row !important;
+}
+
+.rdp-day {
+  display: table-cell !important;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 2px solid transparent; /* Invisible border for spacing */
+  background-clip: padding-box;
+}
+
+/* Day Button inside the cell (if v10 uses buttons) */
+.rdp-day_button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.rdp-day_button:hover:not(.rdp-day_selected) {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+  transform: scale(1.1);
+}
+
+.rdp-day_selected .rdp-day_button {
+  background-color: var(--accent) !important;
+  color: white !important;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(17, 168, 255, 0.4);
+}
+
+.rdp-day_today .rdp-day_button {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.rdp-day_outside {
+  opacity: 0.15;
+}
+
+/* Premium Glow Utility */
+.glow-accent {
+  box-shadow: 0 0 20px rgba(17, 168, 255, 0.15);
+}
+
+.dark .glow-accent {
+  box-shadow: 0 0 25px rgba(94, 106, 210, 0.2);
 }
 
 /* Lyra utilities */

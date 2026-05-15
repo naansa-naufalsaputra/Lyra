@@ -1,0 +1,44 @@
+{
+  "common": {
+    "search": "Search tasks...",
+    "add_task": "Add Task",
+    "placeholder": "Add a task...",
+    "hint": "Hint: Type 'Task PBO tomorrow !high #college' then press Enter ↵",
+    "priority": "Priority",
+    "category": "Category",
+    "status": "Status"
+  },
+  "status": {
+    "all": "All",
+    "active": "Active",
+    "completed": "Completed"
+  },
+  "priority": {
+    "all": "All",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "empty": {
+    "no_results": "No results found",
+    "no_results_desc": "No tasks match your current search or filters.",
+    "all_done": "All caught up!",
+    "all_done_desc": "Time for a break. Your radar is clear."
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "language": "Language",
+    "light_mode": "Light Mode",
+    "dark_mode": "Dark Mode",
+    "ai_integration": "AI Integration",
+    "account": "Account",
+    "logout": "Logout",
+    "recurrence": "Recurrence Rules",
+    "no_rules": "No active recurrence rules yet."
+  },
+  "languages": {
+    "id": "Bahasa Indonesia",
+    "en": "English"
+  }
+}

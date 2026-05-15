@@ -8,8 +8,8 @@
       (function() {
         try {
           var theme = localStorage.getItem('lyra-theme');
-          var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-          if (!theme && supportDarkMode) theme = 'dark';
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (!theme && systemDark) theme = 'dark';
           if (!theme) theme = 'light';
           document.documentElement.classList.add(theme);
           document.documentElement.style.backgroundColor = theme === 'dark' ? '#010102' : '#FAFAFA';
@@ -17,6 +17,11 @@
       })();
     </script>
     <title>Lyra — Focus & Schedule</title>
+    <meta name="description" content="Lyra is a premium task management application designed for focus, scheduling, and productivity tracking with a beautiful modern interface." />
+    <meta property="og:title" content="Lyra — Focus & Schedule" />
+    <meta property="og:description" content="Premium task management for modern productivity." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -50,7 +55,14 @@ loadRrweb();
   <script data-arena-views="true">(function(){var isTop=false;try{isTop=window.self===window.top;}catch(e){}if(!isTop)return;window.__ARENA_META={generationId:"dune",tournamentId:"a10563a8-88f5-493d-8a0b-38a094749c19"};var payload={tournamentId:"a10563a8-88f5-493d-8a0b-38a094749c19",modelId:"dune"};try{var r=document.referrer;if(r){var u=new URL(r);payload.referrerDomain=u.hostname;}}catch(e){}try{var vid=null;try{vid=localStorage.getItem('arena_vid');}catch(e){}if(!vid){vid=typeof crypto!=="undefined"&&crypto.randomUUID?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2)).slice(0,32);try{localStorage.setItem('arena_vid',vid);}catch(e){}}if(vid)payload.viewerId=vid;}catch(e){}try{fetch("https://www.designarena.ai/api/agon/page-views",{"method":"POST","headers":{"Content-Type":"application/json"},"body":JSON.stringify(payload),"keepalive":true});}catch(e){}})();</script>
 </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #010102; color: #FFFFFF;">
+        <div style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #00E5FF; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <style>
+          @keyframes spin { to { transform: rotate(360deg); } }
+        </style>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
       <script data-element-picker>/**
  * Agon Element Picker — injected into the preview iframe.
